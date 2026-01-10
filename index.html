@@ -63,6 +63,7 @@
     .delay-2 { animation-delay: 0.4s; opacity: 0; }
     .delay-3 { animation-delay: 0.6s; opacity: 0; }
     .delay-4 { animation-delay: 0.8s; opacity: 0; }
+    .delay-5 { animation-delay: 1.0s; opacity: 0; }
   </style>
   <style>@view-transition { navigation: auto; }</style>
   <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
@@ -115,8 +116,32 @@
      <div class="w-16 md:w-24 h-px" style="background: linear-gradient(to left, transparent, #2dd4bf);"></div>
     </div><!-- Institute name -->
     <p id="institute-name" class="text-lg md:text-xl tracking-widest uppercase mb-3 fade-in delay-3" style="color: #6b7280;">VIVA Institute of Technology</p><!-- Tagline -->
-    <p id="tagline" class="text-sm md:text-base tracking-wider fade-in delay-4" style="color: #2dd4bf; opacity: 0.8;">Annual Technical Festival</p><!-- Bottom accent dots -->
-    <div class="flex gap-2 mt-12 fade-in delay-4">
+    <p id="tagline" class="text-sm md:text-base tracking-wider fade-in delay-4" style="color: #2dd4bf; opacity: 0.8;">Annual Technical Festival</p><!-- Countdown Timer -->
+    <div id="countdown" class="mt-8 fade-in delay-5">
+      <p class="text-sm tracking-widest uppercase mb-3" style="color:#6b7280;">
+        Event Starts In
+      </p>
+
+      <div class="flex gap-6 text-center">
+        <div>
+          <div id="days" class="text-3xl md:text-4xl font-bold glow-text" style="color:#2dd4bf;">00</div>
+          <span class="text-xs tracking-widest" style="color:#6b7280;">DAYS</span>
+        </div>
+        <div>
+          <div id="hours" class="text-3xl md:text-4xl font-bold glow-text" style="color:#2dd4bf;">00</div>
+          <span class="text-xs tracking-widest" style="color:#6b7280;">HOURS</span>
+        </div>
+        <div>
+          <div id="minutes" class="text-3xl md:text-4xl font-bold glow-text" style="color:#2dd4bf;">00</div>
+          <span class="text-xs tracking-widest" style="color:#6b7280;">MIN</span>
+        </div>
+        <div>
+          <div id="seconds" class="text-3xl md:text-4xl font-bold glow-text" style="color:#2dd4bf;">00</div>
+          <span class="text-xs tracking-widest" style="color:#6b7280;">SEC</span>
+        </div>
+      </div>
+    </div><!-- Bottom accent dots -->
+    <div class="flex gap-2 mt-12 fade-in delay-5">
      <div class="w-2 h-2 rounded-full" style="background-color: #2dd4bf;"></div>
      <div class="w-2 h-2 rounded-full" style="background-color: #2dd4bf; opacity: 0.6;"></div>
      <div class="w-2 h-2 rounded-full" style="background-color: #2dd4bf; opacity: 0.3;"></div>
@@ -129,6 +154,37 @@
     </div><span class="text-xs mt-2" style="color: #6b7280;">Scan to Register</span>
    </div>
   </div>
+  <script>
+    // 🔴 SET YOUR EVENT START DATE & TIME HERE
+    // Format: YYYY-MM-DDTHH:MM:SS
+    const eventStartDate = new Date("2026-01-20T09:00:00").getTime();
+
+    function startCountdown() {
+      const now = new Date().getTime();
+      const diff = eventStartDate - now;
+
+      if (diff <= 0) {
+        document.getElementById("countdown").innerHTML = `
+          <p class="text-xl font-bold glow-text" style="color:#2dd4bf;">
+            Event Started 🚀
+          </p>`;
+        return;
+      }
+
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+      const minutes = Math.floor((diff / (1000 * 60)) % 60);
+      const seconds = Math.floor((diff / 1000) % 60);
+
+      document.getElementById("days").textContent = String(days).padStart(2, "0");
+      document.getElementById("hours").textContent = String(hours).padStart(2, "0");
+      document.getElementById("minutes").textContent = String(minutes).padStart(2, "0");
+      document.getElementById("seconds").textContent = String(seconds).padStart(2, "0");
+    }
+
+    setInterval(startCountdown, 1000);
+    startCountdown();
+  </script>
   <script>
     const defaultConfig = {
       main_title: 'HITAISHI',
@@ -192,7 +248,7 @@
           },
           {
             get: () => config.text_color || defaultConfig.text_color,
-            set: (value) => { config.text_color = value; window.elementSdk.setConfig({ text_color: value }); }
+            set: (value) => { config.text_color = value; window.elementSdk.setConfig({ text_text: value }); }
           },
           {
             get: () => config.muted_color || defaultConfig.muted_color,
