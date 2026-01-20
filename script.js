@@ -63,31 +63,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
-// Sparkle Cursor Effect
-document.addEventListener('mousemove', (e) => {
-    if (Math.random() > 0.85) { // Only create sparkles sometimes to save performance
-        createSparkle(e.clientX, e.clientY);
-    }
-});
 
-function createSparkle(x, y) {
-    const sparkle = document.createElement('div');
-    sparkle.classList.add('sparkle');
-
-    // Randomize position slightly
-    const offsetX = (Math.random() - 0.5) * 20;
-    const offsetY = (Math.random() - 0.5) * 20;
-
-    sparkle.style.left = `${x + offsetX}px`;
-    sparkle.style.top = `${y + offsetY}px`;
-
-    document.body.appendChild(sparkle);
-
-    // Remove after animation
-    setTimeout(() => {
-        sparkle.remove();
-    }, 1000);
-}
 
 
 
